@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  db1:
+    build: ./src
+    environment:
+      SA_PASSWORD: "P@ssw0rd!"
+      ACCEPT_EULA: "Y"
+      MSSQL_AGENT_ENABLED: "true"
+      INIT_SCRIPT: "primary.sql"
+      INIT_WAIT: 30
+      NAME: db1
+    ports:
+      - "9001:1433"
+    container_name: server_db1
+    hostname: server_db1
+    volumes:
+      - mssql-server-shared:/var/opt/mssql/shared
+      - mssql-server-backup:/var/opt/mssql/backup
+    networks:
+      - sqlnet
+  db2:
+    build: ./src
+    environment:
+      SA_PASSWORD: "P@ssw0rd!"
+      ACCEPT_EULA: "Y"
+      MSSQL_AGENT_ENABLED: "true"
+      INIT_SCRIPT: "secondary.sql"
+      INIT_WAIT: 40
+      NAME: db2
+    ports:
+      - "9002:1433"
+    container_name: server_db2
+    hostname: server_db2
+    volumes:
+      - mssql-server-shared:/var/opt/mssql/shared
+      - mssql-server-backup:/var/opt/mssql/backup
+    networks:
+      - sqlnet
+volumes:
+    mssql-server-shared:
+    mssql-server-backup:
+networks:
+  sqlnet:
