@@ -2,13 +2,13 @@
 
 Contains scripts for creating a SqlServer AlwaysOn cluster with Docker.
 This script create two machine with SQL Server Developer Edition on the same docker subnet.
-Communications between the server is made by a shared certificate created on shared folder `/var/opt/mssql/shared`, same thing for the backup shared folder `/var/opt/mssql/backup`
+Communications between the server is made by a shared certificate created on shared folder `/var/opt/mssql/shared`, two server shared also backup folder `/var/opt/mssql/backup` required by the Always On.
 
 ## Install
 
 Clone repo and open a command prompt inside folder.
 
-Build image
+Build image, first time only
 
 ``` bash
 docker-compose build
@@ -31,5 +31,5 @@ Open SSMS and connect to `localhost, 9001` or `9002`
 
 ## Know issues
 
-- When creating the Always On cluster with the SSMS UI the generated address contains the `.DOMAIN` suffix that must be removed
-- The linux version of SQL Server don't have the _Managent Plan_. See [here](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-release-notes?view=sql-server-2017#known-issues)
+- When creating the Always On cluster with the SSMS UI, generated address contains the `.DOMAIN` suffix that must be removed
+- The linux version of SQL Server don't have the _Managent Plan UI_. See [here](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-release-notes?view=sql-server-2017#known-issues)
